@@ -1,0 +1,49 @@
+---
+title: 'Exercise 2.2: Line and Step Charts'
+author: "Scott Breitbach"
+date: "12/27/2021"
+output: pdf_document
+---
+
+# Plots Using **R**
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Set Working Directory
+setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks3-4/")
+
+# Load libraries
+library('readxl')
+
+```
+
+## Load Data
+
+```{r load dfs}
+# Load Data
+popDF <- read_excel("world-population.xlsm")
+
+```
+\pagebreak
+
+## Line Chart
+
+```{r line}
+# Plot a line chart
+plot(popDF$Year, popDF$Population, type = 'l', ylim = c(0, 7e9),
+     xlab = 'Year', ylab = 'Population (billions)', 
+     main = "World Population by Year")
+
+```
+\pagebreak
+
+## Step Chart
+
+```{r step}
+# Plot a step chart
+plot(popDF$Year, popDF$Population, type = 's', ylim = c(0, 7e9),
+     xlab = 'Year', ylab = 'Population (billions)', 
+     main = "World Population by Year")
+
+```

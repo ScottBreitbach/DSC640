@@ -7,7 +7,7 @@ output: pdf_document
 
 # Plots Using **R**
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set Working Directory
