@@ -1,0 +1,110 @@
+---
+title: 'Exercise 1.2: Charts'
+author: "Scott Breitbach"
+date: "12/10/2021"
+output: pdf_document
+---
+
+# Plots Using **R**
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Set Working Directory
+setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks1-2/")
+
+# Load libraries
+library('readxl')
+library('ggplot2')
+library(reshape2)
+
+```
+
+## Load Data
+
+```{r load dfs}
+# Load DataFrames
+dogDF <- read_excel("hotdog-contest-winners.xlsm")
+thanksObama <- read_excel("obama-approval-ratings.xls")
+
+# Add column combining year and winner
+dogDF$YearWinner <- paste(dogDF$Winner, dogDF$Year)
+
+```
+\pagebreak
+
+## Bar Chart
+
+```{r bar}
+# Plot bar chart
+bar <- ggplot(data=dogDF, aes(x=Year, y=`Dogs eaten`, fill=`New record`)) 
+bar + geom_bar(stat = "identity") + coord_flip() + 
+  theme(legend.text = element_blank()) + 
+  ggtitle("Number of Hotdogs Eaten by Winner") + 
+  labs(y="Year", x="Hotdogs") + 
+  labs(fill="New Record")
+
+```
+\pagebreak
+
+## Stacked Bar Chart
+
+```{r stacked}
+# Melt data set into proper format for plotting
+meltObama <- melt(thanksObama)
+
+# Plot stacked bar chart
+ggplot(meltObama, aes(x=Issue, y=value, fill=variable)) + 
+  geom_bar(stat="identity") + coord_flip() + 
+  ggtitle("Obama's Approval Ratings by Issue") + 
+  labs(y="Percent of Response", x="Political Issue") + 
+  labs(fill="Response")
+
+```
+\pagebreak
+
+## Pie Chart
+
+```{r pie}
+# Convert data to table
+mytable <- table(dogDF$Country, dnn = list("Country"))
+
+# Set up chart labels
+lbls <- paste(names(mytable), "\n", mytable, sep="")
+
+# Plot pie chart
+pie(mytable, labels = lbls, 
+    main = "Hotdog Eating Competition: Wins by Country")
+
+```
+\pagebreak
+
+## Donut Chart
+
+```{r donut}
+# Compute percentages
+winsDF <- as.data.frame(mytable, responseName = "Wins")
+
+winsDF$fraction <- winsDF$Wins / sum(winsDF$Wins)
+
+# Compute the cumulative percentages
+winsDF$ymax <- cumsum(winsDF$fraction)
+
+# Compute the bottom of each rectangle
+winsDF$ymin <- c(0, head(winsDF$ymax, n=-1))
+
+# Compute label position
+winsDF$labelPosition <- (winsDF$ymax + winsDF$ymin) / 2
+
+# Plot the donut chart
+ggplot(winsDF, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Country)) + 
+  geom_rect() + 
+  geom_text(x=3.5, aes(y=labelPosition, label=Wins), size=5) +
+  coord_polar(theta = 'y') +
+  xlim(c(2, 4)) +
+  theme_void() +
+  ggtitle("Hotdog Eating Competition: Wins by Country")
+
+```
+
+
