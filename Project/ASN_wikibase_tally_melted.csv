@@ -1,0 +1,45 @@
+Year	FatalAccidents	Fatalities	AircraftType	FatalsPerAcc
+2021	11	14	Gyroplanes	1.27
+2020	13	15	Gyroplanes	1.15
+2019	12	16	Gyroplanes	1.33
+2018	15	17	Gyroplanes	1.13
+2017	8	10	Gyroplanes	1.25
+2016	11	13	Gyroplanes	1.18
+2015	15	18	Gyroplanes	1.20
+2014	11	14	Gyroplanes	1.27
+2013	13	15	Gyroplanes	1.15
+2012	7	8	Gyroplanes	1.14
+2011	10	14	Gyroplanes	1.40
+2021	22	25	Gliders	1.14
+2020	24	26	Gliders	1.08
+2019	38	43	Gliders	1.13
+2018	29	36	Gliders	1.24
+2017	39	43	Gliders	1.10
+2016	30	33	Gliders	1.10
+2015	35	39	Gliders	1.11
+2014	22	27	Gliders	1.23
+2013	31	38	Gliders	1.23
+2012	39	44	Gliders	1.13
+2011	41	49	Gliders	1.20
+2021	72	147	Helicopters (excl. military)	2.04
+2020	59	99	Helicopters (excl. military)	1.68
+2019	82	190	Helicopters (excl. military)	2.32
+2018	95	254	Helicopters (excl. military)	2.67
+2017	80	181	Helicopters (excl. military)	2.26
+2016	86	229	Helicopters (excl. military)	2.66
+2015	105	284	Helicopters (excl. military)	2.70
+2014	86	205	Helicopters (excl. military)	2.38
+2013	90	248	Helicopters (excl. military)	2.76
+2012	97	236	Helicopters (excl. military)	2.43
+2011	116	273	Helicopters (excl. military)	2.35
+2021	371	622	"Aircraft, ultralights (excl. military, airliners)"	1.68
+2020	397	645	"Aircraft, ultralights (excl. military, airliners)"	1.62
+2019	473	788	"Aircraft, ultralights (excl. military, airliners)"	1.67
+2018	453	765	"Aircraft, ultralights (excl. military, airliners)"	1.69
+2017	439	737	"Aircraft, ultralights (excl. military, airliners)"	1.68
+2016	463	796	"Aircraft, ultralights (excl. military, airliners)"	1.72
+2015	511	833	"Aircraft, ultralights (excl. military, airliners)"	1.63
+2014	496	834	"Aircraft, ultralights (excl. military, airliners)"	1.68
+2013	461	827	"Aircraft, ultralights (excl. military, airliners)"	1.79
+2012	557	926	"Aircraft, ultralights (excl. military, airliners)"	1.66
+2011	499	901	"Aircraft, ultralights (excl. military, airliners)"	1.81
