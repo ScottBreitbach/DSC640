@@ -9,6 +9,7 @@ unempDF <- read.csv("unemployment_cleaned.csv")
 expenDF <- read.csv("expenditures.csv")
 
 head(unempDF)
+tail(unempDF)
 
 # Convert column to datetime data type
 unempDF$MoYr <- as.Date(unempDF$MoYr, format = "%Y-%m-%d")
@@ -27,6 +28,8 @@ ggplot(unempDF, aes(x=MoYr, y=Value)) +
   geom_line(color="blue", size=0.5) + 
   theme_minimal() +
   labs(y="Unemployment Level", x="Year") +
-  ggtitle("Unemployment Over Time")
+  ggtitle("Unemployment Over Time") +
+  scale_x_date(date_labels="%Y", breaks = "10 years")
+
   
   
