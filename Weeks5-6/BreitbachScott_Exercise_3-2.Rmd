@@ -8,7 +8,7 @@ output: pdf_document
 # Plots Using **R**
 
 ```{r setup, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 # Set Working Directory
 setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks5-6/")
