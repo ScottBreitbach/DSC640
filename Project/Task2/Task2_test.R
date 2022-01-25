@@ -46,39 +46,41 @@ fpbDF %>%
 #   scale_fill_brewer(palette = "Set1") +
 #   theme(legend.position="none")
 
+modeDF %>%
+  arrange(Fatal_per_Bil_km) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
+  mutate(Mode_of_Transport=factor(Mode_of_Transport, levels=Mode_of_Transport)) %>%   # This trick update the factor levels
+  ggplot(aes(x=Mode_of_Transport, y=Fatal_per_Bil_km)) +
+  geom_bar(stat = "identity", width = 0.4, fill = swBlu) +
+  theme(legend.position = "none") +
+  coord_flip() +
+  geom_text(aes(label = Fatal_per_Bil_km), hjust = "inward") +
+  xlab("") + ylab("Fatalities") +
+  ggtitle("Fatalities per Billion Kilometers Traveled") +
+  theme_classic()
 
 modeDF %>%
   arrange(Fatal_per_Bil_km) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
   mutate(Mode_of_Transport=factor(Mode_of_Transport, levels=Mode_of_Transport)) %>%   # This trick update the factor levels
   ggplot(aes(x=Mode_of_Transport, y=Fatal_per_Bil_hr)) +
-  geom_bar(stat = "identity", width = 0.4) +
+  geom_bar(stat = "identity", width = 0.4, fill = swBlu) +
   theme(legend.position = "none") +
   coord_flip() +
   geom_text(aes(label = Fatal_per_Bil_hr), hjust = "inward") +
   xlab("") + ylab("Fatalities") +
-  ggtitle("Fatalities per Billion Hours Traveled")
+  ggtitle("Fatalities per Billion Hours Traveled") +
+  theme_classic()
 
 modeDF %>%
   arrange(Fatal_per_Bil_km) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
   mutate(Mode_of_Transport=factor(Mode_of_Transport, levels=Mode_of_Transport)) %>%   # This trick update the factor levels
   ggplot(aes(x=Mode_of_Transport, y=Fatal_per_Bil_Trips)) +
-  geom_bar(stat = "identity", width = 0.4) +
+  geom_bar(stat = "identity", width = 0.4, fill = swBlu) +
   theme(legend.position = "none") +
   coord_flip() +
   geom_text(aes(label = Fatal_per_Bil_Trips), hjust = "inward") +
   xlab("") + ylab("Fatalities") +
-  ggtitle("Fatalities per Billion Trips")
-
-modeDF %>%
-  arrange(Fatal_per_Bil_km) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
-  mutate(Mode_of_Transport=factor(Mode_of_Transport, levels=Mode_of_Transport)) %>%   # This trick update the factor levels
-  ggplot(aes(x=Mode_of_Transport, y=Fatal_per_Bil_km)) +
-  geom_bar(stat = "identity", width = 0.4) +
-  theme(legend.position = "none") +
-  coord_flip() +
-  geom_text(aes(label = Fatal_per_Bil_km), hjust = "inward") +
-  xlab("") + ylab("Fatalities") +
-  ggtitle("Fatalities per Billion Kilometers Traveled")
+  ggtitle("Fatalities per Billion Trips")+
+  theme_classic()
 
 
 #================================#
@@ -88,14 +90,17 @@ accYrDF <- read.csv("ASN_accid_fatal_passenger_yr_filtered.csv")
 
 names(accYrDF)
 
-barWidth = 0.9
+barWidth = 0.8
+
+colors <- c("NumAcc5YrAvg" = swRed, "AccPrM5YrAvg" = swRed)
 
 # Plot data
+# Passenger flights with Fatal Accidents each Year
 ggplot(accYrDF, aes(x=Year)) +
   geom_bar(aes(y=Accidents), 
            stat = "identity", fill = swBlu, width = barWidth) +
   geom_line(aes(y=NumAcc5YrAvg), color = swRed, size = 1) +
-  ggtitle("Fatal Accidents: Passenger Flights by Year") +
+  ggtitle("Passenger flights with Fatal Accidents each Year") +
   ylab("Number of Fatal Accidents") +
   theme_classic()
 
@@ -107,10 +112,11 @@ ggplot(accYrDF, aes(x=Year)) +
   ylab("Number of Flights (millions)") +
   theme_classic()
 
+
 ggplot(accYrDF, aes(x=Year)) +
   geom_bar(aes(y=Fatal.accidents.per.mln.flights), 
            stat = "identity", fill = swBlu, width = barWidth) +
   geom_line(aes(y=AccPrM5YrAvg), color = swRed, size = 1) +
-  ggtitle("Fatal Accidents per Million Flights") +
-  ylab("Accidents per Million") +
+  ggtitle("Fatal Accidents per Million Flights each Year") +
+  ylab("Accidents per MM Flights") +
   theme_classic()
