@@ -1,0 +1,78 @@
+---
+title: 'Exercise 4.2: Scatterplots, Bubble Charts, & Density Plots/Maps'
+author: "Scott Breitbach"
+date: "1/27/2022"
+output: pdf_document
+---
+
+# Plots Using **R**
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# Set Working Directory
+setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks7-8/")
+
+# Load libraries
+library(ggplot2)
+
+```
+
+## Load Data
+
+```{r load dfs}
+# Set color to Bellevue purple
+color = "#4f3674"
+
+# Load the data
+crimeDF <- read.csv("crimerates-by-state-2005.csv")
+birthDF <- read.csv("birth-rate.csv")
+
+# Remove Washington, DC due to outliers
+crimeDF <- crimeDF[crimeDF$state != "District of Columbia",]
+# And remove United States due to averages
+crimeDF <- crimeDF[crimeDF$state != "United States",]
+
+```
+\pagebreak
+
+## Scatter Plot
+
+```{r scatter}
+# Create a Scatterplot
+ggplot(crimeDF, aes(x=murder, y=burglary)) +
+  geom_point(col=color) +
+  theme_gray() +
+  labs(x="Murders", y="Burglaries") +
+  ggtitle("Murders vs Burglaries in the United States")
+
+```
+\pagebreak
+
+## Bubble Chart
+
+```{r bubble}
+# Make a bubble plot
+ggplot(crimeDF, aes(x=murder, y=burglary, size=population)) +
+  geom_point(alpha=0.7, col=color) +
+  scale_size(range=c(0.1,24), name="Population Size") +
+  theme_gray() +
+  labs(x="Murders", y="Burglaries") +
+  ggtitle("Murders vs Burglaries in the United States")
+
+```
+\pagebreak
+
+## Density Plot
+
+```{r density}
+# Make a density plot
+ggplot(birthDF, aes(x=X1980)) +
+  geom_density(fill=color, color=color, alpha=0.8) +
+  xlim(0,65) +
+  theme_gray() +
+  labs(x="Live Births per 1,000 Population", y="Density") +
+  ggtitle("Global Distribution of Birth Rates in 1980")
+
+```
+

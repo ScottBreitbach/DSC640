@@ -1,0 +1,89 @@
+---
+title: 'Exercise 3.2: TreeMaps, Area and Stacked Area Charts'
+author: "Scott Breitbach"
+date: "1/15/2022"
+output: pdf_document
+---
+
+# Plots Using **R**
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# Set Working Directory
+setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks5-6/")
+
+# Load libraries
+library(treemap)
+library(ggplot2)
+
+```
+
+## Load Data
+
+```{r load dfs}
+# Load data
+unempDF <- read.csv("unemployment_cleaned.csv")
+expenDF <- read.csv("expenditures.csv")
+
+```
+\pagebreak
+
+## Tree Map
+
+```{r tree}
+# Plot a TreeMap
+treemap(expenDF,
+        index = c("category", "year"),
+        vSize = "expenditure",
+        type = "index",
+        palette = "Set1",
+        title = "Annual Expenditures by Category",
+        
+        fontsize.labels = c(15, 10),   # Label size by level
+        fontcolor.labels = c("white", "dark blue"),
+        fontface.labels = c(2,1),      # 2: bold, 1: normal
+        bg.labels = c("transparent"),  # Label background
+        align.labels = list(           # Label locations
+                c("center", "center"),
+                c("right", "bottom")),
+        overlap.labels = 0.5,          # Label overlap tolerance
+        inflate.labels = FALSE,        # Increase label to size of box
+        
+        border.col = c("black", "dark gray"), # Color of borders
+        border.lwds = c(3,1)           # Line width of borders
+)
+
+```
+\pagebreak
+
+## Area Chart
+
+```{r area}
+# Convert column to datetime data type
+unempDF$MoYr <- as.Date(unempDF$MoYr, format = "%Y-%m-%d")
+
+# Plot Area Chart
+ggplot(unempDF, aes(x=MoYr, y=Value)) + 
+  geom_area(fill="blue", alpha=0.5) +
+  geom_line(color="blue", size=0.5) + 
+  theme_minimal() +
+  labs(y="Unemployment Level", x="Year") +
+  ggtitle("Unemployment Over Time") +
+  scale_x_date(date_labels="%Y", breaks = "10 years")
+
+```
+\pagebreak
+
+## Stacked Area Chart
+
+```{r stack}
+# Plot Stacked Area Chart
+ggplot(expenDF, aes(x=year, y=expenditure, fill=category)) + 
+  geom_area() + 
+  theme_minimal() +
+  labs(y="Expenditure ($USD)", x="Year") +
+  ggtitle("Expenditure Categories Over Time")
+
+```
+
