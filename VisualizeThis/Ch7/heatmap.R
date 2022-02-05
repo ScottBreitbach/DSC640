@@ -50,11 +50,16 @@ bball_heatmap <- heatmap(bball_matrix, Rowv = NA, Colv = NA,
                          scale = 'column', margins = c(5,10))
 
 ?cm.colors
+
+
 # Load ColorBrewer library
 library(RColorBrewer)
 ?brewer.pal
 
-
+# Create a heatmap using ColorBrewer
+bball_heatmap <- heatmap(bball_matrix, Rowv = NA, Colv = NA,
+                         col = brewer.pal(9, "Blues"),  # 9 shades of blue
+                         scale = 'column', margins = c(5,10))
 
 
 
