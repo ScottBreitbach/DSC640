@@ -66,6 +66,3 @@ ggplot(ballers, aes(x=PTS, y=FGP)) +
   scale_fill_distiller(palette= "YlOrRd", direction=1) +
   theme(legend.position = 'none')
 # well that's weird....
-
-
-
