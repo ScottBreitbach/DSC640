@@ -63,6 +63,7 @@ ggplot(costcos, aes(x=Longitude, y=Latitude)) +
 
 ggplot(ballers, aes(x=PTS, y=FGP)) +
   stat_density_2d(aes(fill = ..level..), geom = 'polygon') +
+  scale_fill_distiller(palette= "YlOrRd", direction=1) +
   theme(legend.position = 'none')
 # well that's weird....
 
