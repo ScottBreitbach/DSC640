@@ -1,0 +1,81 @@
+---
+title: 'Exercise 5.2: Heat Maps, Spatial Charts, and Contour Charts'
+author: "Scott Breitbach"
+date: "2/8/2022"
+output: pdf_document
+---
+
+# Plots Using **R**
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# Set Working Directory
+setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks9-10/")
+
+# Load libraries
+library(ggplot2)
+library(maps)
+
+```
+
+## Load Data
+
+```{r load dfs}
+# Load the data
+costcos <- read.csv("costcos-geocoded.csv", header = TRUE)
+ballers <- read.csv("ppg2008.csv", header = TRUE, row.names = 1)
+
+```
+
+\pagebreak
+
+## Heat Map
+
+```{r heat}
+# Store data as a matrix for heatmap
+baller_matrix <- data.matrix(ballers)
+
+# Make a heat map
+heatmap(baller_matrix, Rowv = NA, Colv = NA,
+        col = heat.colors(256),  # sets colors to red / yellow
+        scale = 'column', margins = c(5,10),
+        main = "NBA Per Game Performance")
+
+```
+
+\pagebreak
+
+## Spatial Chart
+
+```{r spatial}
+# Make the map
+map(database = 'state', 
+    col = '#E31837')    # Costco red
+# Add the Costcos
+symbols(costcos$Longitude, costcos$Latitude, 
+        bg = '#005DAA', # Costco blue
+        fg = '#ffffff', # white
+        lwd = 0.1,
+        circles = rep(1, length(costcos$Longitude)), 
+        inches = 0.05,  # size of circles
+        add = TRUE)     # add each to map instead of crating new plot
+# Add title
+title("US Costco Locations (Lower 48)", adj = 0)
+
+```
+
+\pagebreak
+
+## Contour Chart
+
+```{r contour}
+# Plot area + contour
+ggplot(costcos, aes(x=Longitude, y=Latitude)) +
+  stat_density2d(aes(fill = ..level..), geom = 'polygon', color='white') +
+  theme(legend.position = 'none') +
+  xlim(-165, -60) +
+  ggtitle("Contour Plot of Costco Locations by Lat/Lon Coordinates")
+
+```
+

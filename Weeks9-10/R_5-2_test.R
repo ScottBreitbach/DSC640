@@ -4,6 +4,7 @@ setwd("C:/Users/micha/OneDrive/Documents/GitHub/DSC640/Weeks9-10/")
 
 # Load libraries
 library(ggplot2)
+library(maps)
 
 # Load data
 costcos <- read.csv("costcos-geocoded.csv", header = TRUE)
@@ -21,6 +22,12 @@ baller_matrix <- data.matrix(ballers)
 bball_heatmap <- heatmap(baller_matrix, Rowv = NA, Colv = NA,
                          col = heat.colors(256),  # sets colors to red / yellow
                          scale = 'column', margins = c(5,10))
+
+heatmap(baller_matrix, Rowv = NA, Colv = NA,
+        col = heat.colors(256),  # sets colors to red / yellow
+        scale = 'column', margins = c(5,10),
+        main = "NBA Per Game Performance")
+
 
 
 ## SPATIAL CHART
@@ -61,7 +68,7 @@ ggplot(costcos, aes(x=Longitude, y=Latitude)) +
 #   scale_y_continuous(expand = c(0, 0)) + 
 #   theme(legend.position = 'none')
 
-ggplot(ballers, aes(x=PTS, y=FGP)) +
+ggplot(ballers, aes(x=FGP, y=PTS)) +
   stat_density_2d(aes(fill = ..level..), geom = 'polygon') +
   scale_fill_distiller(palette= "YlOrRd", direction=1) +
   theme(legend.position = 'none')
