@@ -193,3 +193,69 @@ head(demoFreq)
 
 wordcloud2(demoFreq)
 
+
+# https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
+library(wordcloud)
+library(RColorBrewer)
+library(wordcloud2)
+library(tm)
+# install.packages("corpus")
+library(corpus)
+
+
+t <- read.csv("compiled_words.txt", sep = "\t", header = FALSE)
+head(t)
+
+names(t)
+
+# install.packages("readtext")
+library(readtext)
+
+# read in text file
+rt_txt <- readtext(paste0("compiled_words.txt"), text_field = "texts")
+
+# create quanteda corpus
+# corpus_txt <- VCorpus(rt_txt)
+# rt_txt
+# ?Corpus()
+# Corpus(rt_txt,"compiled_words.txt")
+
+# https://cran.r-project.org/web/packages/tm/vignettes/tm.pdf
+corp <- VCorpus(VectorSource(t))
+
+# inspect(corp)
+# inspect(corp[[1]])
+# 
+# # Transformations
+# # eliminate whitespace
+# corp2 <- tm_map(corp, stripWhitespace)
+# # convert to lower
+# corp2 <- tm_map(corp2, content_transformer(tolower))
+# # remove stopwords
+# corp2 <- tm_map(corp2, removeWords, stopwords("english"))
+# 
+# inspect(corp2[[1]])
+
+
+corp3 <- tm_map(corp, removeNumbers)
+corp3 <- tm_map(corp3, removePunctuation)
+corp3 <- tm_map(corp3, stripWhitespace)
+corp3 <- tm_map(corp3, content_transformer(tolower))
+corp3 <- tm_map(corp3, removeWords, stopwords("english"))
+
+inspect(corp3[[1]])
+
+# Create a document-term-matrix
+dtm <- TermDocumentMatrix(corp3)
+matrix <- as.matrix(dtm)
+words <- sort(rowSums(matrix), decreasing = TRUE)
+df <- data.frame(word = names(words), freq=words)
+
+# generate wordcloud
+wordcloud(words = df$word, freq = df$freq, min.freq = 1, 
+          max.words = 200, random.order = FALSE,
+          colors = brewer.pal(10, "Dark2"))
+
+
+wordcloud2(data = df, size = 0.7, color = 'random-dark')
+# NOTE: wordcloud2 generates HTML which doesn't show up in PDF
