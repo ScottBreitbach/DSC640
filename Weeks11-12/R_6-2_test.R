@@ -100,24 +100,96 @@ ggplot(edumelt, aes(x=variable, y=value)) +
 
 
 # 
-summary(educadf)
-mean(educadf$Reading)
-educadf[educadf['State'] == 'Nebraska']
+# summary(educadf)
+# mean(educadf$Reading)
+# educadf[educadf['State'] == 'Nebraska']
+# 
+# 
+# b_colors <- c("#4f3674", "#8867b8", "#9d82c5")
+# names(b_colors) <- c('Ok', 'Good', 'Excellent')
+# 
+# ggplot() +
+#   geom_bar(educadf, aes(x = State, y = Reading, fill = Reading), stat = 'identity', position = 'stack')
+# 
+# ggplot() +
+#   geom_bar(data = head(educadf), 
+#            aes(x = State, y = Reading), 
+#            fill = 'black', width = 0.2, stat = 'identity')
+# 
+# names(educadf)
+# head(educadf, 10)
+
+# https://kgilds.rbind.io/post/bullet-chart-attempt/
+library(ggplot2)
+
+fake.data <- data.frame(measure=letters[1:10],
+                        value=rpois(10,5),
+                        mean=rpois(10,5),
+                        target=rpois(10,7) )
+head(fake.data)
+
+p <- ggplot(fake.data, aes(value, measure) )
+
+p <- ggplot(fake.data, aes(measure, value) )
+p <- p + geom_col(fill="grey", width=0.5)
+p <- p + geom_col(aes(measure, mean), width=0.2)
+p <- p + geom_point(aes(measure, target), colour="red")
+p <- p + geom_errorbar(aes(y = target,x = measure, ymin = target,ymax
+                           = target), width = .45)
+p <- p + coord_flip()
+p
 
 
-b_colors <- c("#4f3674", "#8867b8", "#9d82c5")
-names(b_colors) <- c('Ok', 'Good', 'Excellent')
+eduSummary <- read.csv("education_summary.csv")
 
-ggplot() +
-  geom_bar(educadf, aes(x = State, y = Reading, fill = Reading), stat = 'identity', position = 'stack')
+# Rename first column
+names(eduSummary)[1] <- 'Category'
 
-ggplot() +
-  geom_bar(data = head(educadf), 
-           aes(x = State, y = Reading), 
-           fill = 'black', width = 0.2, stat = 'identity')
-
-names(educadf)
-head(educadf, 10)
+head(eduSummary)
 
 
+ggplot(eduSummary, aes(Category, Average)) +
+  geom_col(fill="#bfaed9", width = 0.5) +
+  geom_col(fill=color, aes(Category, Actual), width = 0.2) +
+  geom_errorbar(aes(y = Max, x = Category, 
+                    ymin = Max, ymax = Max), 
+                width = 0.45) +
+  coord_flip() +
+  ggtitle('Nebraska SAT Scores Compared to US Average and Max Score') +
+  labs(x="Subject", y="SAT Score")
+
+
+names(eduSummary)
+
+
+
+## WORDCLOUD
+library(wordcloud)
+
+a <- c("test", "one", "two")
+
+typeof(a)
+a
+
+b <- sample(seq(0,1,0.1), length(a), replace = TRUE)
+b
+
+wordcloud(a,b)
+wordcloud(a)
+
+library(tm)
+# install.packages("tm")
+
+b <- read.delim("compiled_words.txt", sep = "\t")
+b
+
+wordcloud(b)
+
+library(wordcloud2)
+# install.packages("wordcloud2")
+
+wordcloud2(data=b)
+head(demoFreq)
+
+wordcloud2(demoFreq)
 
