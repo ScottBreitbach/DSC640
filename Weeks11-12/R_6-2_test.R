@@ -244,6 +244,9 @@ corp3 <- tm_map(corp3, content_transformer(tolower))
 corp3 <- tm_map(corp3, removeWords, stopwords("english"))
 
 inspect(corp3[[1]])
+txt <- inspect(corp3[[1]])
+write.csv(txt$content, "clean_text.csv", row.names = FALSE)
+
 
 # Create a document-term-matrix
 dtm <- TermDocumentMatrix(corp3)
